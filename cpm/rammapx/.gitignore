@@ -1,0 +1,9 @@
+# Build artifacts
+zout/
+RAMMAPX.COM
+
+# macOS
+.DS_Store
+
+# Amp agent instructions (kept as untracked local file)
+AGENTS.md
