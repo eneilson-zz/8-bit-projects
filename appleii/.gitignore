@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Build outputs
+objs/
+debug/
+modified_apple_roms/
+dsk/
+
+
+
+# Merlin32 intermediate files
+*_Output.txt
+*_Symbols.txt
+_FileInformation.txt
