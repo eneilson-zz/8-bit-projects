@@ -1,0 +1,12 @@
+# Build artifacts
+objs/
+debug/
+dsk/
+modified_apple_roms/
+
+# Local macOS metadata
+.DS_Store
+
+# Local agent instructions for Codex (keep local, never commit)
+AGENTS.md
+agents.md

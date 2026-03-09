@@ -1,0 +1,119 @@
+		   ***********************************
+		   *	 Apple ][e ROM Hacking       *
+		   *               by                *
+		   *             Galael              *
+		   *           June 1, 2007          *
+		   *                                 *
+		   /*/*/*//*/*/*//*/*/*//*/*/*//*/*/*/
+		   /*/                             /*/
+		   /*/   Updated by Eric Neilson   /*/
+		   /*/       January 2, 2009       /*/
+		   /*/*/*//*/*/*//*/*/*//*/*/*//*/*/*/
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+v3 Changes:
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+- Line 1020 changed from BEQ START to BPL START - real world issue where the keyboard buffer is almost never zero unlike the emulators
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+v4 Changes:
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+- Properly saves the Accumulator state now
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+v5 Changes (May 31, 2020):
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+- Fixed a minor issue where the stack was not being reset correctly after a memory copy. Also corrected some offset errors listed below and now show both CD/EF and CF ROM offsets correctly.
+
+NOTE: The original APPLE2EKRK.ROM image posted by Galael overwrote portions of the monitor subroutines that follow the cassette tape save area of ROM. The reason for this is because the original articles on ROM hacking were written for the Apple II+ and not the IIe Enhanced, which has less room for this code in the cassette tape save/load areas.
+
+The bulk of APPLE2EKRK_V5.ROM has been relocated to the Apple self-test area ($C600) and doesn't trounce critical code anymore. 
+
+In this directory is a modified Apple ][e ROM image that will let you break into the Monitor at any time, regardless of what program is loaded. Back in the day,
+many of the better "Krackists" used this technique to break into a game and examine the code for cracking purposes. At the time, you needed to have an old Integer Basic ROM or burn your own modified ROM chip, but with the marvelous Apple ][e emulators out today, all you need to do is point your emulator to APPLE2KRK_V2.ROM and boot away. 
+
+If you tire of the virtual world and decide to play with the real thing,  modified CD and EF ROM images are included here as well for burning your own replacement EEPROMs.  
+
+Usage:
+1) Select the APPLE2KRK ROM file for use with your emulator
+2) Boot
+3) The system will appear to hang. It's waiting for a key press:
+	ESC - Go directly to the monitor
+	Space - Copy stack and register values to $2901-$2904, memory from $0000-$08FF up into $2000-$28FF and then enter monitor (see articles below for why this is important)
+	Any other key - proceed normally
+4) You will probably want to press any key at boot time to get where you are going. You will know the ROM is working if you see "Apple //k" at boot
+
+5) Anytime you press Reset or Boot on your Apple ][e, the system will wait for a key press before continuing. Now you can do your cracking.
+
+What's going on:
+The following sources give excellent in depth explanations:
+	- Hardcore Computist, Volume #6:
+		http://www.computist-project.net/pdfs/hardcore.computist/issue06.pdf 
+	- Krakowitz file which is part of this archive
+	
+Summary:
+The original reset vector address in the ROM is changed from $FA62 to $FEFD. Why $FEFD? That's normally the cassette tape "Load" area which I've replaced with a code snippet that jumps to the main portion of code.  There is not enough room in normal non-bank-switched memory to contain the complete program, so I had to divide the code into three parts:
+
+Part 1 (resides at $FEFD) - Tape load area:
+Handles the reset vector, bank switches, and jumps to main code at INTCX $C600
+
+Part 2 (resides at $C600 - INTCX) - Self-test area:
+Checks keyboard input and then either jumps back to Part 1 for a normal pass-through Reset or jumps to Part 3 for a monitor exit
+
+Part 3 (resides at $FECD) - Tape save area:
+un-bank switches back to SLOTCX memory and jumps to Monitor for some fun!
+
+Other notes:
+- The assembly code was written and compiled with S-C MASM 1.1 which is free. The SC MASM source file is included on romkrk.dsk image, and a .pdf file of the source is also included here for easier viewing.
+
+
+Maybe this file is 20 years too late, but for anyone who still enjoys tinkering with their old Apple ][, I hope this helps make your hobby more enjoyable.
+
+Happy Cracking!
+Galael
+
+Likewise,
+Eric N.
+
+/*/         APPENDIX        */
+
+Here are the hex edits made to the original APPLE2E.ROM files.  The CF ROM section is for the Apple //e Platinum single ROM chip.
+
+Location of Part 0 - Alter NMI and reset vectors (no code here, just a memory location change):
+FILE OFFSET (CF ROM): $3FFA
+FILE OFFSET (EF ROM): $1FFA
+4 BYTES
+OLD: FB0362FA
+NEW: FDFEFDFE
+
+Location of Part 1:
+FILE OFFSET (CF ROM):$3EFD
+FILE OFFSET (EF ROM):$1EFD
+12 BYTES
+OLD:
+8D07C020D1C58D06C0F032D0
+NEW:
+8D07C04C00C68D06C04C62FA
+
+Location of Part 2:
+FILE OFFSET (CF ROM): $0600
+FILE OFFSET (CD ROM): $0600
+81 BYTES
+OLD:
+8D50C0A004A2001879B4C79500E8D0F71879B4C7D500D010E8D0F56A2C19C0100249A58810E130065500184CCDC6860186028603A2048604E601A88D83C08D83C0A50129F0C9C0D00CAD8BC0AD8BC0A501
+NEW:
+48AD00C010FBC9A0F008C99BF03F684C03FF688D02298E03298C0429BA8E0129A000B90000990020B90001990021C8D0F1843C8442843EA909853FA902853DA9228543202CFE202FFB2058FC48684CCDFE
+
+Location of Part 3:
+FILE OFFSET (CF ROM): $3ECD
+FILE OFFSET (EF ROM): $1ECD
+6 BYTES
+OLD:
+A9408D07C020
+NEW:
+8D06C04C59FF
+
+Apple //e to Apple //k
+FILE OFFSET (CF ROM): $3F12
+FILE OFFSET (EF ROM): $1F12
+	Filename: EF ROM
+	Offset: $1F12
+	Old: $E5
+	New: $EB
