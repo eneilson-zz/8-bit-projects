@@ -6,7 +6,7 @@ This project builds modified Apple //e Enhanced CD and EF ROM images (aka the "K
 - `Space` -> copy `$0000-$08FF` to `$2000-$28FF`, then enter Monitor
 - Any other key -> continue normal boot
 
-I originally created the Krakist ROM patch in 2009 using SC-MASM, and recently migrated everything over to Merlin-8, including the ability to cross-assemble the source on a modern PC.  History of the project and details on how it works are here: https://planemo.org/2012/01/13/apple-e-rom-hacking/
+I originally created the Krakist ROM patch in 2009 using SC-MASM, and recently migrated everything over to Merlin-8, including the ability to cross-assemble the source on a modern PC using Merlin32.  History of the project and details on how it works are here: https://planemo.org/2012/01/13/apple-e-rom-hacking/
 
 The output of this project are four files in the modified_apple_roms directory:
 - Patched CD Enhanced ROM
