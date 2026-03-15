@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 BIN_DIR="$PROJECT_DIR/bin"
 
-RETRO_DBG="/Applications/Retro Debugger.app/Contents/MacOS/Retro Debugger"
+VICE="/opt/homebrew/bin/x64sc"
 CRT="$BIN_DIR/stash-it.crt"
 
 if [[ ! -f "$CRT" ]]; then
@@ -13,9 +13,8 @@ if [[ ! -f "$CRT" ]]; then
     exit 1
 fi
 
-exec "$RETRO_DBG" \
-    -c64 \
-    -clearsettings \
-    -crt "$CRT" \
-    -reset \
-    -unpause
+exec "$VICE" \
+    -default \
+    -cartcrt "$CRT" \
+    -reu \
+    -reusize 512
