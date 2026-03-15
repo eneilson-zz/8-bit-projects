@@ -2,9 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build C64 (KickAssembler)",
+      "label": "Build C64 CRT (KickAssembler)",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/build.sh",
+      "command": "${workspaceFolder}/scripts/build-crt.sh",
       "group": {
         "kind": "build",
         "isDefault": true
