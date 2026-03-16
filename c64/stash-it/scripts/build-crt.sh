@@ -15,7 +15,7 @@ echo "=== Assembling main_cart.asm ==="
 "$JAVA" -jar "$KICKASS_JAR" \
     "$PROJECT_DIR/main_cart.asm" \
     -odir "$BIN_DIR" \
-    -o main_cart.prg \
+    -o "$BIN_DIR/main_cart.prg" \
     -debugdump \
     -vicesymbols \
     2>&1 | tee "$BIN_DIR/buildlog-crt.txt"
