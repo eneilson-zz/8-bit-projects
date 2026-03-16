@@ -13,7 +13,9 @@ if [[ ! -f "$CRT" ]]; then
     exit 1
 fi
 
-SYMBOLS="$PROJECT_DIR/main_cart.vs"
+SYMBOLS="$BIN_DIR/main_cart.vs"
+# Optional: pass a test PRG as first argument to autoload (but not autostart)
+AUTOLOAD="${1:-}"
 
 exec "$VICE" \
     -default \
@@ -21,4 +23,5 @@ exec "$VICE" \
     -cartcrt "$CRT" \
     -reu \
     -reusize 512 \
-    ${SYMBOLS:+-moncommands "$SYMBOLS"}
+    ${SYMBOLS:+-moncommands "$SYMBOLS"} \
+    ${AUTOLOAD:+-autoload "$AUTOLOAD"}
