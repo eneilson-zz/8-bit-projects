@@ -13,8 +13,12 @@ if [[ ! -f "$CRT" ]]; then
     exit 1
 fi
 
+SYMBOLS="$PROJECT_DIR/main_cart.vs"
+
 exec "$VICE" \
     -default \
+    -VICIIfilter 0 \
     -cartcrt "$CRT" \
     -reu \
-    -reusize 512
+    -reusize 512 \
+    ${SYMBOLS:+-moncommands "$SYMBOLS"}
