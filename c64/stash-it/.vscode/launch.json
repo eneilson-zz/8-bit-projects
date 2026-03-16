@@ -2,10 +2,16 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C64 Baseline (No Cartridge)",
+      "name": "C64 Build + Run VICE",
       "type": "node-terminal",
       "request": "launch",
-      "command": "\"/Applications/Retro Debugger.app/Contents/MacOS/Retro Debugger\" -c64 -clearsettings -detacheverything -reset"
+      "command": "pkill -f x64sc 2>/dev/null || true; \"${workspaceFolder}/scripts/build-crt.sh\" && \"${workspaceFolder}/scripts/run-vice-crt.sh\""
+    },
+    {
+      "name": "C64 Run VICE (no rebuild)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pkill -f x64sc 2>/dev/null || true; \"${workspaceFolder}/scripts/run-vice-crt.sh\""
     },
     {
       "name": "C64 Build + Run CRT",
@@ -20,16 +26,10 @@
       "command": "pkill -f 'Retro Debugger' 2>/dev/null || true && \"${workspaceFolder}/scripts/run-retro-crt.sh\""
     },
     {
-      "name": "C64 Build + Run VICE",
+      "name": "C64 Baseline (No Cartridge)",
       "type": "node-terminal",
       "request": "launch",
-      "command": "pkill -f x64sc 2>/dev/null || true; \"${workspaceFolder}/scripts/build-crt.sh\" && \"${workspaceFolder}/scripts/run-vice-crt.sh\""
-    },
-    {
-      "name": "C64 Run VICE (no rebuild)",
-      "type": "node-terminal",
-      "request": "launch",
-      "command": "pkill -f x64sc 2>/dev/null || true; \"${workspaceFolder}/scripts/run-vice-crt.sh\""
+      "command": "\"/Applications/Retro Debugger.app/Contents/MacOS/Retro Debugger\" -c64 -clearsettings -detacheverything -reset"
     }
   ]
 }
