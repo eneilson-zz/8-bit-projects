@@ -8,6 +8,18 @@
       "command": "pkill -f x64sc 2>/dev/null || true; \"${workspaceFolder}/scripts/build-crt.sh\" && \"${workspaceFolder}/scripts/build-tests.sh\" && \"${workspaceFolder}/scripts/run-vice-crt.sh\" \"${workspaceFolder}/bin/test/t1-test.prg\""
     },
     {
+      "name": "C64 Build + Run VICE + T4 Test",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pkill -f x64sc 2>/dev/null || true; \"${workspaceFolder}/scripts/build-crt.sh\" && \"${workspaceFolder}/scripts/build-tests.sh\" && \"${workspaceFolder}/scripts/run-vice-crt.sh\" \"${workspaceFolder}/bin/test/t4-test.prg\""
+    },
+    {
+      "name": "C64 Build + Run VICE + T3 Test",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pkill -f x64sc 2>/dev/null || true; \"${workspaceFolder}/scripts/build-crt.sh\" && \"${workspaceFolder}/scripts/build-tests.sh\" && \"${workspaceFolder}/scripts/run-vice-crt.sh\" \"${workspaceFolder}/bin/test/t3-test.prg\""
+    },
+    {
       "name": "C64 Build + Run VICE + T2 Test",
       "type": "node-terminal",
       "request": "launch",

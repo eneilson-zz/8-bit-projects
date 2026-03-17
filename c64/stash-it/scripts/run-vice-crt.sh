@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 BIN_DIR="$PROJECT_DIR/bin"
 
-VICE="/opt/homebrew/bin/x64sc"
+VICE="/Users/eric/Documents/dev/commodore/vice-emu/vice/src/x64sc"
 CRT="$BIN_DIR/stash-it.crt"
 
 if [[ ! -f "$CRT" ]]; then
@@ -20,6 +20,7 @@ AUTOLOAD="${1:-}"
 exec "$VICE" \
     -default \
     -VICIIfilter 0 \
+    -directory /Users/eric/Documents/dev/commodore/vice-emu/vice/data \
     -cartcrt "$CRT" \
     -reu \
     -reusize 512 \
