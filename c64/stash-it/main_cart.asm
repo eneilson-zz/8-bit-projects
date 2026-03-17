@@ -11,7 +11,9 @@
 //   T2  C64 $0000-$7FFF     → REU bank 0 $00000  32K pure RAM
 //   T3  C64 $8000-$9FFF     → REU bank 0 $08000  8K ROML (ROM bytes, hw limit)
 //   T4-pre: save orig $01   → REU bank 7 $70007  (before changing $01)
-//   T4  C64 $A000-$FFFF     → REU bank 0 $0A000  24K RAM-under-ROM ($01=$34)
+//   T4a C64 $A000-$CFFF     → REU bank 0 $0A000  12K RAM under BASIC ($01=$34)
+//   T4b C64 $E000-$FFFF     → REU bank 0 $0E000  8K RAM under Kernal ($01=$34)
+//       $D000-$DFFF skipped — live I/O registers, side effects if read via DMA
 //   T5  orig SP (via $D020) → REU bank 7 $70006  (fixed C64 addr, no ZP)
 //
 // REU bank 7 CPU state block ($70000, 8 bytes):
@@ -159,10 +161,84 @@ nmiHandler:
     lda #$90
     sta $DF01           // execute: C64 → REU
 
-    // ── T4-T5 disabled for T3 isolation testing ───────────────────────────
-    // T4-pre: orig $01    → REU bank 7 $70007
-    // T4: C64 $A000-$FFFF → REU bank 0
-    // T5: orig SP         → REU bank 7 $70006
+    // ── T4-pre: save orig $01 → REU bank 7 $70007 ────────────────────────
+    // REU DMA bypasses the 6510 CPU port, reading the underlying RAM cell
+    // at $0001 (which is $00, not the actual port value). Instead, read $01
+    // directly into A and stage it via $D020 (border), then DMA 1 byte from
+    // $D020 with fixed C64 address — same technique used for T5.
+    lda $01             // A = current $01 value (normally $37)
+    sta $D020           // stage in border register (I/O, not user RAM)
+    lda #$20
+    sta $DF02           // C64 addr lo = $20
+    lda #$D0
+    sta $DF03           // C64 addr hi = $D0  ($D020 = border color)
+    lda #$07
+    sta $DF04           // REU addr lo = $07  (bank 7 offset $0007 = MEM_CONFIG)
+    lda #$00
+    sta $DF05           // REU addr mi = $00
+    lda #$07
+    sta $DF06           // REU addr hi = $07  (bank 7)
+    lda #$01
+    sta $DF07           // length = 1 byte
+    lda #$00
+    sta $DF08
+    lda #$80
+    sta $DF0A           // addr ctrl = $80: C64 addr fixed (don't increment)
+    lda #$90
+    sta $DF01           // execute: C64 → REU (reads $D020 = orig $01 value)
+
+    // ── T4a+T4b: RAM under BASIC+Kernal ($01=$34) ────────────────────────
+    // Set $01=$34 (LORAM=0, HIRAM=0, CHAREN=1): exposes RAM under BASIC+Kernal
+    // while keeping I/O live at $D000-$DFFF. ROML remains mapped (EXROM tied low).
+    // $D000-$DFFF is skipped — reading live I/O registers has side effects.
+    lda #$34
+    sta $01
+
+    // T4a: $A000-$CFFF → REU bank 0 $A000 (12K RAM under BASIC)
+    lda #$00
+    sta $DF02           // C64 addr lo = $00
+    lda #$A0
+    sta $DF03           // C64 addr hi = $A0  ($A000)
+    lda #$00
+    sta $DF04           // REU addr lo = $00
+    lda #$A0
+    sta $DF05           // REU addr mi = $A0
+    lda #$00
+    sta $DF06           // REU bank = 0
+    lda #$00
+    sta $DF07           // length lo = $00
+    lda #$30
+    sta $DF08           // length hi = $30  → $3000 = 12288 bytes
+    lda #$00
+    sta $DF0A           // addr ctrl = auto-increment both
+    lda #$90
+    sta $DF01           // execute: C64 → REU
+
+    // T4b: $E000-$FFFF → REU bank 0 $E000 (8K RAM under Kernal)
+    lda #$00
+    sta $DF02           // C64 addr lo = $00
+    lda #$E0
+    sta $DF03           // C64 addr hi = $E0  ($E000)
+    lda #$00
+    sta $DF04           // REU addr lo = $00
+    lda #$E0
+    sta $DF05           // REU addr mi = $E0
+    lda #$00
+    sta $DF06           // REU bank = 0
+    lda #$00
+    sta $DF07           // length lo = $00
+    lda #$20
+    sta $DF08           // length hi = $20  → $2000 = 8192 bytes
+    lda #$00
+    sta $DF0A           // addr ctrl = auto-increment both
+    lda #$90
+    sta $DF01           // execute: C64 → REU
+
+    lda #$37
+    sta $01             // restore normal memory map
+
+    // ── T5 disabled for T4 isolation testing ──────────────────────────────
+    // T5: orig SP → REU bank 7 $70006
 
     // Border green = snapshot complete
     lda #$05
