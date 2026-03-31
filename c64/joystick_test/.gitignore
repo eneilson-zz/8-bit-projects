@@ -8,3 +8,6 @@
 
 # Build output
 bin/
+
+# Project learnings — never commit, never delete
+agents.md
