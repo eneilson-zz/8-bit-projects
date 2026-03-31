@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C64 Build + Run (VICE)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "${workspaceFolder}/scripts/build.sh && /opt/homebrew/bin/x64sc ${workspaceFolder}/bin/joystick_test.prg"
+    }
+  ]
+}
