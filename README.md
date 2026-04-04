@@ -14,6 +14,12 @@ A Kaypro-specific CP/M memory relocator based on Digital Research's MOVCPM. This
 
 A CP/M 2.2 memory map utility that displays key system addresses — warm boot vector, BDOS entry, CCP base, CBIOS base, and more — along with the calculated TPA size in XX.Xk format. Extended from David L. Ransen's original RAMMAP.ASM (1983) with TPA size display added by Eric C. Neilson. Written in Intel 8080 assembly and assembled with zmac.
 
+### Commodore 64
+
+#### [Joystick Tester](c64/joystick_test/)
+
+A real-time joystick input diagnostic utility for the Commodore 64. Displays live input state for both joystick ports simultaneously, showing all 8 directions (cardinal and diagonal) and the fire button for each port. Direction labels highlight green when active; the fire button highlights red. Raw CIA register bits are displayed for each port. Press RUN/STOP to exit and cold-reset the machine. Written in 6502 assembly and assembled with KickAssembler.
+
 ### Apple II
 
 #### [Apple //e Krackist ROM Patch](appleii/appleii_rom_krk_merlin32)
