@@ -10,6 +10,13 @@
         "isDefault": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "Clean C64 Build Output",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/clean.sh",
+      "group": "build",
+      "problemMatcher": []
     }
   ]
 }
