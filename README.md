@@ -14,6 +14,10 @@ A Kaypro-specific CP/M memory relocator based on Digital Research's MOVCPM. This
 
 A CP/M 2.2 memory map utility that displays key system addresses — warm boot vector, BDOS entry, CCP base, CBIOS base, and more — along with the calculated TPA size in XX.Xk format. Extended from David L. Ransen's original RAMMAP.ASM (1983) with TPA size display added by Eric C. Neilson. Written in Intel 8080 assembly and assembled with zmac.
 
+#### [PCGET / PCPUT](cpm/pcget-put-kaypro/)
+
+A Kaypro II port of Mike Douglas's PCGET and PCPUT, the CP/M XMODEM file-transfer utilities originally written for the Kaypro 10 (and based on Ward Christensen's MODEM program). PCGET receives a file from a PC and writes it to a Kaypro disk; PCPUT sends a file from the Kaypro to a PC. Includes a Makefile that cross-compiles to both `.COM` and CP/M-compatible Intel HEX (suitable for the `PIP PCGET.HEX=TTY:` + `LOAD` bootstrap path described in the project README), and precompiled Kaypro II binaries for users who don't want to assemble themselves. Written in Intel 8080 assembly and assembled with zmac. Tested on real Kaypro II hardware.
+
 ### Commodore 64
 
 #### [Joystick Tester](c64/joystick_test/)
