@@ -1,0 +1,5 @@
+build/
+zout/
+.DS_Store
+CLAUDE.md
+playground/
