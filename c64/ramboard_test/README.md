@@ -11,6 +11,8 @@ pass/fail status.
 
 ## Building
 
+If you don't want to build the project yourself, you can download the pre-built .d64 disk image with the program on it from the ./disk directory.
+
 Requires [KickAssembler](http://www.theweb.dk/KickAssembler/) and Java.
 
 ```bash
