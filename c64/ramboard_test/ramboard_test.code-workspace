@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.asm": "kickassembler",
+			"*.inc": "kickassembler",
+			"*.s": "kickassembler",
+			"*.a": "kickassembler",
+			"*.lib": "kickassembler"
+		},
+		"kickass-c64.javaBin": "/usr/bin/java",
+		"kickass-c64.kickAssJar": "/Applications/KickAssembler/KickAss.jar"
+	}
+}

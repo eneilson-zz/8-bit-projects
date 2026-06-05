@@ -24,6 +24,12 @@ A Kaypro II port of Mike Douglas's PCGET and PCPUT, the CP/M XMODEM file-transfe
 
 A real-time joystick input diagnostic utility for the Commodore 64. Displays live input state for both joystick ports simultaneously, showing all 8 directions (cardinal and diagonal) and the fire button for each port. Direction labels highlight green when active; the fire button highlights red. Raw CIA register bits are displayed for each port. Press RUN/STOP to exit and cold-reset the machine. Written in 6502 assembly and assembled with KickAssembler.
 
+#### [RAMBoard Test](c64/ramboard_test/)
+
+This is an update to the RAMBoard Test diagnostic utility for testing the expansion RAM ("RAMBoard") added to a Commodore disk drive (1541/1541C/1541-II/1571). This project re-implements the 1989 CLD BASIC/assembly utility in all-assembly language, and also adds a new option to select different areas of RAM expansion within the 1541 to test. This is useful for machines like the Commodore 64 Ultimate that can support expanded disk drive memory on its virtual 1541s, but not at location $8000 - $9FFF where the original RAMBoard test program looked.
+
+This program works by uploading a small 6502 routine into the disk drive's RAM at $0500. The user selects one of five expanded RAM locations, and the program fills all 8k of the expanded RAM with a test pattern. The pattern is then read back and verified byte-by-byte, and a pass/fail message is generated.
+
 ### Apple II
 
 #### [Apple //e Krackist ROM Patch](appleii/appleii_rom_krk_merlin32)
