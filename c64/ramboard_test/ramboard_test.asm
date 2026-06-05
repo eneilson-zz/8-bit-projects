@@ -1,18 +1,17 @@
 //==============================================================================
 // ramboard_test.asm — C64 RAMBoard tester, re-implemented in all 6502 assembly
+// (C) CLD '89 WITH UPDATES BY ERIC NEILSON in 2026
 //
-// Step 1: faithful reproduction of playground/ramboard test.prg.
+// Faithful reproduction of playground/ramboard test.prg.
 //   * HOST (C64): UI + DOS command-channel protocol. Uploads a 6502 routine to
 //     the drive via "M-W", executes it via "M-E", reads the result back via
 //     "M-R", prints Passed / Failed @ $hhhh.
 //   * DRIVE (drive 6502): N-pass XOR fill/verify test of an 8 KB window
 //     ($8000-$9FFF). byte = addr_lo EOR addr_hi. First mismatch -> fail address.
+//   * MODIFIED to support more expanded RAM areas:
+//     $8000 (default), $2000, $4000, $6000, $A000.
 //
-// The window/algorithm were established by a byte-for-byte decode of the
-// original; see agents.md / DESIGN.md. Step 2 (separate) makes the window start
-// address selectable at runtime.
-//
-// Build: scripts/build.sh  (or `make`)  ->  bin/ramboard test.prg
+// Build: scripts/build.sh  (or `make`)  ->  bin/ramboard test.d64
 // Run:   LOAD"*",8,1  then  RUN
 //==============================================================================
 
