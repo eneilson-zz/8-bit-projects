@@ -41,7 +41,9 @@ Output is written to `bin/joystick_test.prg`.
 
 ## Running
 
-Load from disk:
+A prebuilt disk image is provided at `disks/joystick_test.d64` for users who
+prefer not to compile from source. Attach it in your emulator (or write it to
+a real floppy) and load it:
 
 ```
 LOAD"*",8,1
