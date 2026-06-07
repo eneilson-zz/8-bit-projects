@@ -31,13 +31,15 @@ physical port a joystick is connected to.
 
 ## Building
 
+If you don't want to build the program yourself, you can get the pre-compiled binary on a .d64 disk image in the ./disks directory
+
 Requires [KickAssembler](http://www.theweb.dk/KickAssembler/) and Java.
 
 ```bash
 scripts/build.sh
 ```
 
-Output is written to `bin/joystick_test.prg`.
+Output is written to `bin/joystick_test.prg` and `bin/joystick_test.d64`
 
 ## Running
 
